@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1594133165 source:c:\users\charlie\documents\estructuradedatos\n-queens\main.cpp
+	<iostream>
+	"Queen.h"
+	"InputData.h"
+
+1594145682 c:\users\charlie\documents\estructuradedatos\n-queens\queen.h
+
+1594147232 c:\users\charlie\documents\estructuradedatos\n-queens\inputdata.h
+	<iostream>
+	<string>
+	"Check.h"
+
+1594147263 c:\users\charlie\documents\estructuradedatos\n-queens\check.h
+	<iostream>
+	<string.h>
+	"Convert.h"
+
+1594132388 c:\users\charlie\documents\estructuradedatos\n-queens\convert.h
+	<string>
+
