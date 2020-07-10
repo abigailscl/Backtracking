@@ -2,20 +2,20 @@
 #include <stdlib.h>
 #include <iostream>
 #include <iostream>
-
+#include "File.h"
 using namespace std;
 template <class T>
 class VueltaCaballo
 {
 	public:
 		VueltaCaballo();
-		int movimiento(int** mat,T num, T i, T j, T dim, T *q);
-			int movimiento(int** mat,T num, T i, T j, T dim);
+		int movimiento(int** mat, T q,T num, T i, T j, T dim);
 		int** inicializarMatriz(int ** mat, T dim);
 		void imprimir(int ** mat, T dim);
 	private:
 	int * movi = new int [8];
-	int* movj = new int [8];	
+	int* movj = new int [8];
+		File<int> file;	
 };
 /**@brief  Constructor
 @param 
@@ -40,76 +40,51 @@ VueltaCaballo<T>::VueltaCaballo()
 	*(movj+5) = 1;
 	*(movj+6) = -1;
 	*(movj+7) = -2 ;
+	file.crearArchivo();
 }
-/**@brief  Movimiento del caballo (Backtraking)
-@param  int** mat
-@param  T num
-@param  T i
-@param  T j
-@param  T dim
-@returns
-*/
-template <class T>
-int  VueltaCaballo<T>:: movimiento(int** mat,T num, T i, T j, T dim)
-{
-  int k, u, v;
 
-  for (k = 0; k < 8; k++) {
-        u = i + this->movi[k]; v = j + this->movj[k];
-    if (u >= 0 && u < dim && v >= 0 && v < dim) { /* esta dentro de los limites */
-      if (*(*(mat+u)+v)== 0) {
-        *(*(mat+u)+v) = num;  
-        if (i < dim*dim)   
-          movimiento(mat,num+1,u,v, dim);
-        else 
-		{
-			*(*(mat+u)+v) = 0; 
-		}//imprimir(mat, dim); 
-      }
-    }
-  }
-}
 /**@brief  Movimiento del caballo (Backtraking)
 @param  int** mat
+@param  T control
 @param  T num
 @param  T i
 @param  T j
 @param  T dim
-@param  T *control
 @returns int control
 */
 template <class T>
-int  VueltaCaballo<T>:: movimiento(int** mat,T num, T i, T j, T dim, T *control)
+int  VueltaCaballo<T>:: movimiento(int** mat, T cont,T num, T i, T j, T dim)
 {
 	int k, u, v;
-  k = 0;
-   *control = 0;
-   if(*control == 1)
+  	k = 0;
+   if(cont == 1)
    {
-   	 imprimir(mat,dim);
-   	 return 0;
+   	imprimir(mat,dim);
+   	file.mostrar(mat, dim);
+   	return 0;
    }else
    {
-   	do {
+   	file.mostrar(mat, dim);
+   		do {
      	u = i + this->movi[k]; v = j + this->movj[k];
     	if (u >= 0 && u < dim && v >= 0 && v < dim) { 
       		if (*(*(mat+u)+v)== 0) { 
-        		*(*(mat+u)+v) = num;  
+        		*(*(mat+u)+v) = num; 
         		if (num < dim*dim) {  
-          			movimiento(mat,num+1,u,v,dim, control);
-         		 if (*control==0){
+          			movimiento(mat,0, num+1,u,v,dim);
+         		 if (cont==0){
 		   		*(*(mat+u)+v) = 0;  
 				}
-        	}else {
-			*control = 1; 
-			return 1;
+        	}else { 
+				movimiento(mat,1, num+1,u,v,dim);
+			//	file.mostrar(mat, dim);
 			}
       	  }
     	}
     		k++;
-  	} while (*control==0 && k < 8);
+  	} while ( k < 8);
+  	return 1;
    }
-  
 
 }
 /**@brief  Inicializar matriz
@@ -151,7 +126,5 @@ void VueltaCaballo<T>::imprimir(int ** mat, T dim)
 		}
 		cout<<endl;
 	}
-	free(movi);
-	free(movj);
 }
 
