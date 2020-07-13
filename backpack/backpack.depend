@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1594491013 source:c:\users\charlie\documents\estructuradedatos\backpack\main.cpp
+	<iostream>
+	"Backpack.h"
+
+1594502016 c:\users\charlie\documents\estructuradedatos\backpack\backpack.h
+	"Object.h"
+
+1594356297 c:\users\charlie\documents\estructuradedatos\backpack\object.h
+
